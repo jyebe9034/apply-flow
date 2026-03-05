@@ -1,3 +1,18 @@
 spring:
   application:
     name: applyflow
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/applyflow
+    username: applyuser
+    password: 1234
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
