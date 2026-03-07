@@ -5,8 +5,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Getter
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Builder
 @Entity
 @Table(name = "users")
@@ -28,4 +28,13 @@ public class User extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
+
+    public static User createUser(String email, String password, String name) {
+        return User.builder()
+                .email(email)
+                .password(password)
+                .name(name)
+                .role(Role.USER)
+                .build();
+    }
 }
