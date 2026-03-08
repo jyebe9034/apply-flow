@@ -1,7 +1,5 @@
 package com.hannah.applyflow.global.config;
 
-import com.hannah.applyflow.global.security.CustomUserDetails;
-import com.hannah.applyflow.global.security.CustomUserDetailsService;
 import com.hannah.applyflow.global.security.JwtAuthenticationEntryPoint;
 import com.hannah.applyflow.global.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -25,12 +22,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final JwtAuthenticationFilter authenticationFilter; // 인증 구성을 위한 필터
+    private final JwtAuthenticationFilter authenticationFilter;
     private final JwtAuthenticationEntryPoint authenticationEntryPoint;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        // CSRF 보호 비활성화
         http
                 .csrf(csrf -> csrf.disable())
                 .exceptionHandling(exception ->
@@ -50,7 +46,7 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean // 인증 관리자를 빈으로 정의
+    @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) {
         return config.getAuthenticationManager();
     }

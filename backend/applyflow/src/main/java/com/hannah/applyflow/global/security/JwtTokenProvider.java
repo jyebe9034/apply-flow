@@ -5,6 +5,7 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
 
@@ -31,27 +32,27 @@ public class JwtTokenProvider {
     }
 
     public String getEmail(String token) {
-        return Jwts.parserBuilder()
+        Jws<Claims> claims = Jwts.parserBuilder()
                 .setSigningKey(getKey())
                 .build()
-                .parseClaimsJwt(token)
-                .getBody()
-                .getSubject();
+                .parseClaimsJws(token);
+        return claims.getBody().getSubject();
     }
 
     public boolean validateToken(String token) {
         try {
-            Jwt<Header, Claims> claimsJwt = Jwts.parserBuilder()
+            Jws<Claims> claims = Jwts.parserBuilder()
                     .setSigningKey(getKey())
                     .build()
-                    .parseClaimsJwt(token);
-            return !claimsJwt.getBody().getExpiration().before(new Date());
-        } catch (Exception e) {
+                    .parseClaimsJws(token);
+            return !claims.getBody().getExpiration().before(new Date());
+        } catch (JwtException | IllegalArgumentException e) {
             return false;
         }
     }
 
     private Key getKey() {
-        return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+        return Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
     }
+
 }
