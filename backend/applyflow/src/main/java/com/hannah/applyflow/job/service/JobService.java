@@ -1,5 +1,6 @@
 package com.hannah.applyflow.job.service;
 
+import com.hannah.applyflow.global.exception.JobNotFoundException;
 import com.hannah.applyflow.job.Job;
 import com.hannah.applyflow.job.JobStatus;
 import com.hannah.applyflow.job.dto.JobCreateRequest;
@@ -64,6 +65,6 @@ public class JobService {
     }
 
     private Job findJobById(Long id) {
-        return jobRepository.findById(id).orElseThrow(() -> new RuntimeException("Job Not Found"));
+        return jobRepository.findById(id).orElseThrow(() -> new JobNotFoundException(id));
     }
 }
