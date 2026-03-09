@@ -1,8 +1,8 @@
 package com.hannah.applyflow.global.exception;
 
-public class JobNotFoundException extends RuntimeException {
+public class JobNotFoundException extends CustomException {
 
-    public JobNotFoundException(Long id) {
-        super("Job not found by id: " + id);
+    public JobNotFoundException() {
+        super(ErrorCode.JOB_NOT_FOUND);
     }
 }

@@ -71,7 +71,7 @@ public class JobService {
     }
 
     private Job findJobById(Long id) {
-        return jobRepository.findById(id).orElseThrow(() -> new JobNotFoundException(id));
+        return jobRepository.findById(id).orElseThrow(() -> new JobNotFoundException());
     }
 
     private void validateJobOwner(Job job, User currentUser) {
