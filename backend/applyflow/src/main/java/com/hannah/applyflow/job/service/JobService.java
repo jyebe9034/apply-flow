@@ -41,25 +41,29 @@ public class JobService {
         return new JobResponse(job);
     }
 
+    @Transactional(readOnly = true)
     public Page<JobResponse> getJobs(User user, Pageable pageable) {
-        return jobRepository.findAllByUser(user, pageable)
-                .map(JobResponse::new);
+        return jobRepository.findAllByUser(user, pageable).map(JobResponse::new);
     }
 
+    @Transactional(readOnly = true)
     public JobResponse getJobById(Long id) {
-        Job job = jobRepository.findById(id).orElseThrow(() -> new RuntimeException("Job Not Found"));
+        Job job = findJobById(id);
         return new JobResponse(job);
     }
 
-
     public JobResponse updateJob(Long id, JobUpdateRequest request) {
-        Job job = jobRepository.findById(id).orElseThrow(() -> new RuntimeException("Job Not Found"));
+        Job job = findJobById(id);
         job.update(request);
         return new JobResponse(job);
     }
 
     public void deleteJob(Long id) {
-        Job job = jobRepository.findById(id).orElseThrow(() -> new RuntimeException("Job Not Found"));
+        Job job = findJobById(id);
         jobRepository.delete(job);
+    }
+
+    private Job findJobById(Long id) {
+        return jobRepository.findById(id).orElseThrow(() -> new RuntimeException("Job Not Found"));
     }
 }
