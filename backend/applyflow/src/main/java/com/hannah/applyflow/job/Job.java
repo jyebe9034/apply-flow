@@ -1,6 +1,7 @@
 package com.hannah.applyflow.job;
 
 import com.hannah.applyflow.global.entity.BaseTimeEntity;
+import com.hannah.applyflow.job.dto.JobUpdateRequest;
 import com.hannah.applyflow.user.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -44,13 +45,13 @@ public class Job extends BaseTimeEntity {
     private JobPlatform platform;
 
     @Column(length = 100)
-    private String recruiterName;
+    private String contactName;
 
     @Column(length = 150)
-    private String recruiterEmail;
+    private String contactEmail;
 
     @Column(length = 30)
-    private String recruiterPhone;
+    private String contactPhone;
 
     private LocalDateTime interviewDateTime;
 
@@ -60,4 +61,50 @@ public class Job extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    public void update(JobUpdateRequest request) {
+        if (request.getPosition() != null) {
+            this.position = request.getPosition();
+        }
+
+        if (request.getStatus() != null) {
+            this.status = request.getStatus();
+        }
+
+        if (request.getJobUrl() != null) {
+            this.jobUrl = request.getJobUrl();
+        }
+
+        if (request.getSalary() != null) {
+            this.salary = request.getSalary();
+        }
+
+        if (request.getLocation() != null) {
+            this.location = request.getLocation();
+        }
+
+        if (request.getPlatform() != null) {
+            this.platform = request.getPlatform();
+        }
+
+        if (request.getContactName() != null) {
+            this.contactName = request.getContactName();
+        }
+
+        if (request.getContactEmail() != null) {
+            this.contactEmail = request.getContactEmail();
+        }
+
+        if (request.getContactPhone() != null) {
+            this.contactPhone = request.getContactPhone();
+        }
+
+        if (request.getInterviewDateTime() != null) {
+            this.interviewDateTime = request.getInterviewDateTime();
+        }
+
+        if (request.getMemo() != null) {
+            this.memo = request.getMemo();
+        }
+    }
 }
