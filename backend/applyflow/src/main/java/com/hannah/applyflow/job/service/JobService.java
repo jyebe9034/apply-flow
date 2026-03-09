@@ -1,5 +1,6 @@
 package com.hannah.applyflow.job.service;
 
+import com.hannah.applyflow.global.exception.AccessDeniedException;
 import com.hannah.applyflow.global.exception.JobNotFoundException;
 import com.hannah.applyflow.job.Job;
 import com.hannah.applyflow.job.JobStatus;
@@ -48,23 +49,34 @@ public class JobService {
     }
 
     @Transactional(readOnly = true)
-    public JobResponse getJobById(Long id) {
+    public JobResponse getJobById(Long id, User currentUser) {
         Job job = findJobById(id);
+        validateJobOwner(job, currentUser);
         return new JobResponse(job);
     }
 
-    public JobResponse updateJob(Long id, JobUpdateRequest request) {
+    public JobResponse updateJob(Long id, JobUpdateRequest request, User currentUser) {
         Job job = findJobById(id);
+        validateJobOwner(job, currentUser);
+
         job.update(request);
         return new JobResponse(job);
     }
 
-    public void deleteJob(Long id) {
+    public void deleteJob(Long id, User currentUser) {
         Job job = findJobById(id);
+        validateJobOwner(job, currentUser);
+
         jobRepository.delete(job);
     }
 
     private Job findJobById(Long id) {
         return jobRepository.findById(id).orElseThrow(() -> new JobNotFoundException(id));
+    }
+
+    private void validateJobOwner(Job job, User currentUser) {
+        if (!job.getUser().getId().equals(currentUser.getId())) {
+            throw new AccessDeniedException();
+        }
     }
 }

@@ -30,17 +30,17 @@ public class JobController {
     }
 
     @GetMapping("/{id}")
-    public JobResponse getJob(@PathVariable Long id) {
-        return jobService.getJobById(id);
+    public JobResponse getJob(@PathVariable Long id, @AuthenticationPrincipal CustomUserDetails userDetails) {
+        return jobService.getJobById(id, userDetails.getUser());
     }
 
     @PatchMapping("/{id}")
-    public JobResponse updateJob(@PathVariable Long id, @RequestBody JobUpdateRequest request) {
-        return jobService.updateJob(id, request);
+    public JobResponse updateJob(@PathVariable Long id, @RequestBody JobUpdateRequest request, @AuthenticationPrincipal CustomUserDetails userDetails) {
+        return jobService.updateJob(id, request, userDetails.getUser());
     }
 
     @DeleteMapping("/{id}")
-    public void deleteJob(@PathVariable Long id) {
-        jobService.deleteJob(id);
+    public void deleteJob(@PathVariable Long id, @AuthenticationPrincipal CustomUserDetails userDetails) {
+        jobService.deleteJob(id, userDetails.getUser());
     }
 }
