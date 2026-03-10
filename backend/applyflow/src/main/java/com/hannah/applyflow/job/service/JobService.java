@@ -25,8 +25,9 @@ public class JobService {
 
     private final JobRepository jobRepository;
 
-    public JobResponse createJob(JobCreateRequest request) {
+    public JobResponse createJob(User user, JobCreateRequest request) {
         Job job = Job.builder()
+                .user(user)
                 .companyName(request.getCompanyName())
                 .position(request.getPosition())
                 .status(JobStatus.APPLIED)
@@ -40,7 +41,7 @@ public class JobService {
                 .contactPhone(request.getContactPhone())
                 .build();
         jobRepository.save(job);
-        return new JobResponse(job);
+        return JobResponse.from(job);
     }
 
     @Transactional(readOnly = true)
@@ -52,7 +53,7 @@ public class JobService {
     public JobResponse getJobById(Long id, User currentUser) {
         Job job = findJobById(id);
         validateJobOwner(job, currentUser);
-        return new JobResponse(job);
+        return JobResponse.from(job);
     }
 
     public JobResponse updateJob(Long id, JobUpdateRequest request, User currentUser) {
@@ -60,7 +61,7 @@ public class JobService {
         validateJobOwner(job, currentUser);
 
         job.update(request);
-        return new JobResponse(job);
+        return JobResponse.from(job);
     }
 
     public void deleteJob(Long id, User currentUser) {

@@ -7,11 +7,13 @@ import com.hannah.applyflow.job.dto.JobUpdateRequest;
 import com.hannah.applyflow.job.service.JobService;
 import lombok.RequiredArgsConstructor;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/jobs")
 @RequiredArgsConstructor
@@ -20,8 +22,8 @@ public class JobController {
     private final JobService jobService;
 
     @PostMapping
-    public JobResponse createJob(@RequestBody JobCreateRequest request) {
-        return jobService.createJob(request);
+    public JobResponse createJob(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody JobCreateRequest request) {
+        return jobService.createJob(userDetails.getUser(), request);
     }
 
     @GetMapping

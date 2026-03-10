@@ -42,4 +42,8 @@ public class JobResponse {
         this.interviewDateTime = job.getInterviewDateTime();
         this.memo = job.getMemo();
     }
+
+    public static JobResponse from(Job job) {
+        return new JobResponse(job);
+    }
 }
