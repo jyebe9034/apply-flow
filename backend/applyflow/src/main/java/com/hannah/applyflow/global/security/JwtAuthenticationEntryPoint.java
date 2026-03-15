@@ -24,7 +24,12 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
-        Map<String, String> error = Map.of("error", "Unauthorized");
+        Map<String, Object> error = Map.of(
+                "status", 401,
+                "error", "Unauthorized",
+                "message", "Authentication Required",
+                "path", request.getRequestURI()
+        );
 
         objectMapper.writeValue(response.getWriter(), error);
 

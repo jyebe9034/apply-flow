@@ -5,6 +5,7 @@ import com.hannah.applyflow.user.dto.LoginRequest;
 import com.hannah.applyflow.user.dto.SignupRequest;
 import com.hannah.applyflow.user.service.AuthService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,12 +19,13 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    public AuthResponse login(@RequestBody LoginRequest request) {
-        return authService.login(request);
+    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
+        return ResponseEntity.ok(authService.login(request));
     }
 
     @PostMapping("/signup")
-    public void signup(@RequestBody SignupRequest request) {
+    public ResponseEntity<Void> signup(@RequestBody SignupRequest request) {
         authService.signup(request);
+        return ResponseEntity.ok().build();
     }
 }
