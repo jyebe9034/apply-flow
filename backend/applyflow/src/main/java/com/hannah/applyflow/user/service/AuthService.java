@@ -1,5 +1,7 @@
 package com.hannah.applyflow.user.service;
 
+import com.hannah.applyflow.global.exception.CustomException;
+import com.hannah.applyflow.global.response.ErrorCode;
 import com.hannah.applyflow.global.security.JwtTokenProvider;
 import com.hannah.applyflow.user.User;
 import com.hannah.applyflow.user.dto.AuthResponse;
@@ -35,6 +37,10 @@ public class AuthService {
     }
 
     public void signup(SignupRequest request) {
+        if (userRepository.existsByEmail(request.getEmail())) {
+            throw new CustomException(ErrorCode.DUPLICATE_EMAIL);
+        }
+
         String encodedPassword = passwordEncoder.encode(request.getPassword());
         User user = User.createUser(request.getEmail(), encodedPassword, request.getName());
 

@@ -1,7 +1,7 @@
 package com.hannah.applyflow.job.service;
 
-import com.hannah.applyflow.global.exception.AccessDeniedException;
-import com.hannah.applyflow.global.exception.JobNotFoundException;
+import com.hannah.applyflow.global.exception.CustomException;
+import com.hannah.applyflow.global.response.ErrorCode;
 import com.hannah.applyflow.job.Job;
 import com.hannah.applyflow.job.JobStatus;
 import com.hannah.applyflow.job.dto.JobCreateRequest;
@@ -10,7 +10,6 @@ import com.hannah.applyflow.job.dto.JobUpdateRequest;
 import com.hannah.applyflow.job.repository.JobRepository;
 import com.hannah.applyflow.user.User;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -72,12 +71,12 @@ public class JobService {
     }
 
     private Job findJobById(Long id) {
-        return jobRepository.findById(id).orElseThrow(() -> new JobNotFoundException());
+        return jobRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.JOB_NOT_FOUND));
     }
 
     private void validateJobOwner(Job job, User currentUser) {
         if (!job.getUser().getId().equals(currentUser.getId())) {
-            throw new AccessDeniedException();
+            throw new CustomException(ErrorCode.ACCESS_DENIED);
         }
     }
 }

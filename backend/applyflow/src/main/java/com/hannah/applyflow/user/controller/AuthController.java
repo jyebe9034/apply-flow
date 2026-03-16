@@ -1,10 +1,13 @@
 package com.hannah.applyflow.user.controller;
 
+import com.hannah.applyflow.global.response.ApiResponse;
 import com.hannah.applyflow.user.dto.AuthResponse;
 import com.hannah.applyflow.user.dto.LoginRequest;
 import com.hannah.applyflow.user.dto.SignupRequest;
 import com.hannah.applyflow.user.service.AuthService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,13 +22,15 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
-        return ResponseEntity.ok(authService.login(request));
+    public ResponseEntity<ApiResponse<AuthResponse>> login(@Valid @RequestBody LoginRequest request) {
+        AuthResponse data = authService.login(request);
+        return ResponseEntity.ok(ApiResponse.success("Login successful", data));
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<Void> signup(@RequestBody SignupRequest request) {
+    public ResponseEntity<ApiResponse<Void>> signup(@Valid @RequestBody SignupRequest request) {
         authService.signup(request);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(ApiResponse.success("Registration completed successfully."));
     }
 }
