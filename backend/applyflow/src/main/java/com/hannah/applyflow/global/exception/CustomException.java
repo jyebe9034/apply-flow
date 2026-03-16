@@ -1,5 +1,6 @@
 package com.hannah.applyflow.global.exception;
 
+import com.hannah.applyflow.global.response.ErrorCode;
 import lombok.Getter;
 
 @Getter
