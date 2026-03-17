@@ -25,7 +25,7 @@ const LoginForm = () => {
 
     try {
       await login(form.email, form.password);
-      router.push("/dashboard");
+      router.push("/jobs");
     } catch (err: any) {
       alert(err?.message || "Login Failed. Please try again.");
     } finally {
