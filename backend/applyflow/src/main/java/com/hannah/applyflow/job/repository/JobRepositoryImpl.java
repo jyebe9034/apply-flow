@@ -20,10 +20,18 @@ public class JobRepositoryImpl implements JobRepositoryCustom { // QueryDsl ì¶”ê
 
     private final JPAQueryFactory queryFactory;
 
+    private static final QJob job = QJob.job;
+
+    @Override
+    public List<Job> findAllByUser(User user) {
+        return queryFactory
+                .selectFrom(job)
+                .where(job.user.eq(user))
+                .fetch();
+    }
+
     @Override
     public Page<Job> findAllByUser(User user, Pageable pageable) {
-        QJob job = QJob.job;
-
         List<Job> contents = queryFactory
                 .selectFrom(job)
                 .where(job.user.eq(user))
