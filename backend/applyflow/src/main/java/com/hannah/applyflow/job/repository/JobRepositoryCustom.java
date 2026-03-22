@@ -6,7 +6,11 @@ import com.hannah.applyflow.user.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface JobRepositoryCustom {
+
+    List<Job> findAllByUser(User user);
 
     Page<Job> findAllByUser(User user, Pageable pageable);
 
