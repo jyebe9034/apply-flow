@@ -11,6 +11,22 @@ export type JobPlatform =
   | "DIRECT_APPLY"
   | "OTHER";
 
+export const STATUS_COLOR: Record<JobStatus, string> = {
+  APPLIED: "bg-blue-50 text-blue-600 border-blue-100",
+  DOCUMENT_PASSED: "bg-purple-50 text-purple-600 border-purple-100",
+  INTERVIEW: "bg-yellow-50 text-yellow-600 border-yellow-100",
+  OFFER: "bg-green-50 text-green-600 border-green-100",
+  REJECTED: "bg-red-50 text-red-500 border-red-100",
+};
+
+export const JOB_STATUSES: JobStatus[] = [
+  "APPLIED",
+  "DOCUMENT_PASSED",
+  "INTERVIEW",
+  "OFFER",
+  "REJECTED",
+];
+
 export interface JobResponse {
   id : number;
   companyName: string;

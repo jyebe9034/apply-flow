@@ -1,20 +1,12 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { JobResponse, JOB_STATUS_LABEL, JobStatus } from "@/types/job";
+import { JobResponse, JOB_STATUS_LABEL, STATUS_COLOR, } from "@/types/job";
 
 interface JobCardProps {
   job: JobResponse;
   onDelete: (id: number) => void;
 }
-
-const STATUS_COLOR: Record<JobStatus, string> = {
-  APPLIED: "bg-blue-50 text-blue-600 border-blue-100",
-  DOCUMENT_PASSED: "bg-purple-50 text-purple-600 border-purple-100",
-  INTERVIEW: "bg-yellow-50 text-yellow-600 border-yellow-100",
-  OFFER: "bg-green-50 text-green-600 border-green-100",
-  REJECTED: "bg-red-50 text-red-500 border-red-100",
-};
 
 const JobCard = ({ job, onDelete }: JobCardProps) => {
   const router = useRouter();

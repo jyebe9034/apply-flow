@@ -2,28 +2,12 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import {
-  JobCreateRequest,
-  JobUpdateRequest,
-  JobResponse,
-  JobStatus,
-  JobPlatform,
-  JOB_STATUS_LABEL,
-  JOB_PLATFORM_LABEL,
-} from "@/types/job";
+import { JobCreateRequest, JobUpdateRequest, JobResponse, JobStatus, JobPlatform, JOB_STATUS_LABEL, JOB_PLATFORM_LABEL, JOB_STATUSES } from "@/types/job";
 import { createJobApi, updateJobApi } from "@/services/jobService";
 
 interface JobFormProps {
   initialData?: JobResponse;
 }
-
-const JOB_STATUSES: JobStatus[] = [
-  "APPLIED",
-  "DOCUMENT_PASSED",
-  "INTERVIEW",
-  "OFFER",
-  "REJECTED",
-];
 
 const JOB_PLATFORMS: JobPlatform[] = [
   "LINKEDIN",
