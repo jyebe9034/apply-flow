@@ -43,6 +43,11 @@ public class DashboardService {
                 .map(JobResponse::from)
                 .toList();
 
-        return new DashboardResponse(totalCount, statusCount, recentJobs, upcomingInterviews);
+        return DashboardResponse.builder()
+                .totalCount(totalCount)
+                .statusCount(statusCount)
+                .recentJobs(recentJobs)
+                .upcomingInterviews(upcomingInterviews)
+                .build();
     }
 }
