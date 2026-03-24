@@ -29,8 +29,8 @@ public class JobService {
                 .user(user)
                 .companyName(request.getCompanyName())
                 .position(request.getPosition())
-                .status(JobStatus.APPLIED)
-                .appliedAt(LocalDate.now())
+                .status(request.getStatus())
+                .appliedAt(request.getAppliedAt())
                 .jobUrl(request.getJobUrl())
                 .salary(request.getSalary())
                 .location(request.getLocation())
@@ -38,6 +38,8 @@ public class JobService {
                 .contactName(request.getContactName())
                 .contactEmail(request.getContactEmail())
                 .contactPhone(request.getContactPhone())
+                .interviewDateTime(request.getInterviewDateTime())
+                .memo(request.getMemo())
                 .build();
         jobRepository.save(job);
         return JobResponse.from(job);
