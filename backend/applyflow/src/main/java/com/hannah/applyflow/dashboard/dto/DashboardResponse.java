@@ -15,4 +15,14 @@ public class DashboardResponse {
     private Map<JobStatus, Long> statusCount;
     private List<JobResponse> recentJobs;
     private List<JobResponse> upcomingInterviews;
+
+    public static DashboardResponse of(long totalCount, Map<JobStatus, Long> statusCount,
+                                       List<JobResponse> recentJobs, List<JobResponse> upcomingInterviews) {
+        return DashboardResponse.builder()
+                .totalCount(totalCount)
+                .statusCount(statusCount)
+                .recentJobs(recentJobs)
+                .upcomingInterviews(upcomingInterviews)
+                .build();
+    }
 }

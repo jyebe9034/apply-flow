@@ -3,7 +3,6 @@ package com.hannah.applyflow.job.service;
 import com.hannah.applyflow.global.exception.CustomException;
 import com.hannah.applyflow.global.response.ErrorCode;
 import com.hannah.applyflow.job.Job;
-import com.hannah.applyflow.job.JobStatus;
 import com.hannah.applyflow.job.dto.JobCreateRequest;
 import com.hannah.applyflow.job.dto.JobResponse;
 import com.hannah.applyflow.job.dto.JobUpdateRequest;
@@ -14,8 +13,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDate;
 
 @Service
 @Transactional
@@ -47,7 +44,7 @@ public class JobService {
 
     @Transactional(readOnly = true)
     public Page<JobResponse> getJobs(User user, Pageable pageable) {
-        return jobRepository.findAllByUser(user, pageable).map(JobResponse::new);
+        return jobRepository.findAllByUser(user, pageable).map(JobResponse::from);
     }
 
     @Transactional(readOnly = true)

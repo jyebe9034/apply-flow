@@ -3,12 +3,14 @@ package com.hannah.applyflow.job.dto;
 import com.hannah.applyflow.job.Job;
 import com.hannah.applyflow.job.JobPlatform;
 import com.hannah.applyflow.job.JobStatus;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
+@Builder
 public class JobResponse {
 
     private Long id;
@@ -26,24 +28,22 @@ public class JobResponse {
     private LocalDateTime interviewDateTime;
     private String memo;
 
-    public JobResponse(Job job) {
-        this.id = job.getId();
-        this.companyName = job.getCompanyName();
-        this.position = job.getPosition();
-        this.status = job.getStatus();
-        this.appliedAt = job.getAppliedAt();
-        this.jobUrl = job.getJobUrl();
-        this.salary = job.getSalary();
-        this.location = job.getLocation();
-        this.platform = job.getPlatform();
-        this.contactName = job.getContactName();
-        this.contactEmail = job.getContactEmail();
-        this.contactPhone = job.getContactPhone();
-        this.interviewDateTime = job.getInterviewDateTime();
-        this.memo = job.getMemo();
-    }
-
     public static JobResponse from(Job job) {
-        return new JobResponse(job);
+        return JobResponse.builder()
+                .id(job.getId())
+                .companyName(job.getCompanyName())
+                .position(job.getPosition())
+                .status(job.getStatus())
+                .appliedAt(job.getAppliedAt())
+                .jobUrl(job.getJobUrl())
+                .salary(job.getSalary())
+                .location(job.getLocation())
+                .platform(job.getPlatform())
+                .contactName(job.getContactName())
+                .contactEmail(job.getContactEmail())
+                .contactPhone(job.getContactPhone())
+                .interviewDateTime(job.getInterviewDateTime())
+                .memo(job.getMemo())
+                .build();
     }
 }
