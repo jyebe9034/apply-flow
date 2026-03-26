@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class SignupRequest {
 
     @NotBlank(message = "Name is required.")
