@@ -3,12 +3,14 @@ package com.hannah.applyflow.job.dto;
 import com.hannah.applyflow.job.JobPlatform;
 import com.hannah.applyflow.job.JobStatus;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
+@Builder
 @AllArgsConstructor
 public class JobUpdateRequest {
 
