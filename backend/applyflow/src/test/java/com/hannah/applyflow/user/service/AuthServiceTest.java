@@ -8,7 +8,6 @@ import com.hannah.applyflow.user.dto.AuthResponse;
 import com.hannah.applyflow.user.dto.LoginRequest;
 import com.hannah.applyflow.user.dto.SignupRequest;
 import com.hannah.applyflow.user.repository.UserRepository;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -84,7 +83,7 @@ public class AuthServiceTest {
     }
 
     @Test
-    void login_invalidCredential_throwException() {
+    void login_invalidCredential_throwsException() {
         // given
         LoginRequest request = new LoginRequest("hannah@gmail.com", "wrongPassword");
         given(manager.authenticate(any()))
