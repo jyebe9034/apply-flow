@@ -1,0 +1,16 @@
+# Build stage
+FROM node:20-alpine AS Build
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+RUN npm run Build
+
+# Run stage
+FROM node:20-alpine
+WORKDIR /app
+COPY --from=build / app/.next/standalone ./
+COPY --from=build / app/.next/static ./.next/static
+COPY --from=build / app/public ./public
+EXPOSE 3000
+ENTRYPOINT ["node", "server.js"]
