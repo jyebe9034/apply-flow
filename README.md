@@ -50,3 +50,46 @@
 | GitHub Actions | CI/CD pipeline |
 
 --- 
+
+## 🏗 Architecture
+Client (Browser)
+↓
+Nginx (Port 80/443)
+↓
+┌───┴───┐
+↓       ↓
+Next.js  Spring Boot
+(3000)   (8080)
+↓
+PostgreSQL
+(5432)
+
+---
+
+## 📁 Project Structure
+apply-flow/
+├── .github/
+│   └── workflows/
+│       └── deploy.yml        # GitHub Actions CI/CD
+├── backend/
+│   └── applyflow/
+│       ├── src/
+│       │   ├── main/java/com/hannah/applyflow/
+│       │   │   ├── user/             # Authentication and User management
+│       │   │   ├── job/              # Job application
+│       │   │   ├── dashboard/        # Dashboard
+│       │   │   └── global/           # Common (Exception, Security)
+│       │   └── test/                 # Unit tests
+│       ├── docker-compose.yml        # Local development
+│       └── Dockerfile
+├── frontend/
+│   └── applyFlow/
+│       ├── app/              # Next.js pages
+│       ├── components/       # React components
+│       ├── services/         # API calls
+│       ├── types/            # TypeScript types
+│       └── Dockerfile
+├── nginx/
+│   └── nginx.conf
+├── docker-compose.prod.yml   # Production
+└── .env.example
