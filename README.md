@@ -52,6 +52,7 @@
 --- 
 
 ## 🏗 Architecture
+
 ```
 Client (Browser)
 ↓
@@ -68,6 +69,7 @@ PostgreSQL
 ---
 
 ## 📁 Project Structure
+
 ```
 apply-flow/
 ├── .github/
@@ -155,6 +157,8 @@ docker compose -f docker-compose.prod.yml up -d --build
 ## 🔐 Environment Variables
 
 Copy `.env.example` to `.env` and fill in the values.
+
+```
 DB_NAME=                     # PostgreSQL database name
 DB_USER=                     # PostgreSQL username
 DB_PASSWORD=                 # PostgreSQL password
@@ -163,6 +167,7 @@ API_URL=                     # Backend API URL
 SPRING_DATASOURCE_URL=       # Spring datasource URL
 SPRING_DATASOURCE_USERNAME=  # Spring datasource username
 SPRING_DATASOURCE_PASSWORD=  # Spring datasource password
+```
 
 ---
 
@@ -182,6 +187,7 @@ Unit tests are written for:
 
 ## 🔄 CI/CD
 
+```
 GitHub Actions automatically deploys to AWS EC2 on every push to the `main` branch.
 Push to main
 ↓
@@ -192,6 +198,7 @@ SSH into EC2
 git pull
 ↓
 Docker rebuild & restart
+```
 
 ---
 
