@@ -52,6 +52,7 @@
 --- 
 
 ## 🏗 Architecture
+```
 Client (Browser)
 ↓
 Nginx (Port 80/443)
@@ -63,10 +64,11 @@ Next.js  Spring Boot
 ↓
 PostgreSQL
 (5432)
-
+```
 ---
 
 ## 📁 Project Structure
+```
 apply-flow/
 ├── .github/
 │   └── workflows/
@@ -93,3 +95,107 @@ apply-flow/
 │   └── nginx.conf
 ├── docker-compose.prod.yml   # Production
 └── .env.example
+```
+
+---
+
+## ⚙️ Getting Started
+
+### Prerequisites
+- Docker & Docker Compose
+- Node.js 20+
+- Java 21
+- PostgreSQL 16
+
+### Local Development
+
+**1. Clone the repository**
+```bash
+git clone https://github.com/jyebe9034/apply-flow.git
+cd apply-flow
+```
+
+**2. Set up environment variables**
+```bash
+cp .env.example .env
+# Fill in the values in .env
+```
+
+**3. Start the database**
+```bash
+docker compose up -d
+```
+
+**4. Start the backend**
+```bash
+cd backend/applyflow
+./gradlew bootRun
+```
+
+**5. Start the frontend**
+```bash
+cd frontend/applyFlow
+npm install
+npm run dev
+```
+
+**6. Open the browser**
+http://localhost:3000
+
+---
+
+### Production Deployment
+
+```bash
+docker compose -f docker-compose.prod.yml up -d --build
+```
+
+---
+
+## 🔐 Environment Variables
+
+Copy `.env.example` to `.env` and fill in the values.
+DB_NAME=                     # PostgreSQL database name
+DB_USER=                     # PostgreSQL username
+DB_PASSWORD=                 # PostgreSQL password
+JWT_SECRET=                  # JWT secret key
+API_URL=                     # Backend API URL
+SPRING_DATASOURCE_URL=       # Spring datasource URL
+SPRING_DATASOURCE_USERNAME=  # Spring datasource username
+SPRING_DATASOURCE_PASSWORD=  # Spring datasource password
+
+---
+
+## 🧪 Testing
+
+```bash
+cd backend/applyflow
+./gradlew test
+```
+
+Unit tests are written for:
+- `AuthService` - Authentication logic
+- `JobService` - Job application CRUD and access control
+- `DashboardService` - Dashboard statistics and filtering
+
+---
+
+## 🔄 CI/CD
+
+GitHub Actions automatically deploys to AWS EC2 on every push to the `main` branch.
+Push to main
+↓
+GitHub Actions
+↓
+SSH into EC2
+↓
+git pull
+↓
+Docker rebuild & restart
+
+---
+
+## 👩‍💻 Author
+
+- GitHub: [@jyebe9034](https://github.com/jyebe9034)
+  
