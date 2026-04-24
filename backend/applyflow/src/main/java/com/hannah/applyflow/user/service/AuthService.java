@@ -10,7 +10,9 @@ import com.hannah.applyflow.user.dto.SignupRequest;
 import com.hannah.applyflow.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,15 +26,21 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
 
     public AuthResponse login(LoginRequest request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
-                        request.getPassword()
-                )
-        );
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.getEmail(),
+                            request.getPassword()
+                    )
+            );
+        } catch (BadCredentialsException e) {
+            throw new CustomException(ErrorCode.INVALID_CREDENTIALS);
+        } catch (AuthenticationException e) {
+            throw new CustomException(ErrorCode.INVALID_CREDENTIALS);
+        }
+
 
         String token = jwtTokenProvider.createToken(request.getEmail());
-
         return new AuthResponse(token);
     }
 
