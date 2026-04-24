@@ -6,6 +6,8 @@ import com.hannah.applyflow.job.dto.JobCreateRequest;
 import com.hannah.applyflow.job.dto.JobResponse;
 import com.hannah.applyflow.job.dto.JobUpdateRequest;
 import com.hannah.applyflow.job.service.JobService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -15,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "Job Application API", description = "Endpoints for managing job applications and tracking recruitment progress")
 @Slf4j
 @RestController
 @RequestMapping("/api/jobs")
@@ -23,6 +26,8 @@ public class JobController {
 
     private final JobService jobService;
 
+    @Operation(summary = "Create a new job application",
+            description = "Registers a new job application with details like company name and application date.")
     @PostMapping
     public ResponseEntity<ApiResponse<JobResponse>> createJob(
             @AuthenticationPrincipal CustomUserDetails userDetails,
@@ -32,6 +37,8 @@ public class JobController {
                 .body(ApiResponse.success("Job created successfully.", data));
     }
 
+    @Operation(summary = "Get all job applications",
+            description = "Retrieves a paginated list of job applications for the currently authenticated user.")
     @GetMapping
     public ResponseEntity<ApiResponse<Page<JobResponse>>> getJobs(
             @AuthenticationPrincipal CustomUserDetails userDetails,
@@ -40,6 +47,8 @@ public class JobController {
         return ResponseEntity.ok(ApiResponse.success("Jobs retrieved successfully", data));
     }
 
+    @Operation(summary = "Get job application details",
+            description = "Retrieves the full details of a specific job application by its ID.")
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<JobResponse>> getJob(
             @PathVariable Long id,
@@ -48,6 +57,8 @@ public class JobController {
         return ResponseEntity.ok(ApiResponse.success("Job retrieved successfully", data));
     }
 
+    @Operation(summary = "Update job application",
+            description = "Updates the information of an existing job application, such as status or interview dates.")
     @PatchMapping("/{id}")
     public ResponseEntity<ApiResponse<JobResponse>> updateJob(
             @PathVariable Long id,
@@ -57,6 +68,8 @@ public class JobController {
         return ResponseEntity.ok(ApiResponse.success("Job updated successfully", data));
     }
 
+    @Operation(summary = "Delete job application",
+            description = "Removes a job application from the user's history.")
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteJob(
             @PathVariable Long id,
