@@ -33,9 +33,7 @@ public class AuthService {
                             request.getPassword()
                     )
             );
-        } catch (BadCredentialsException e) {
-            throw new CustomException(ErrorCode.INVALID_CREDENTIALS);
-        } catch (AuthenticationException e) {
+        } catch (BadCredentialsException e ) {
             throw new CustomException(ErrorCode.INVALID_CREDENTIALS);
         }
 
